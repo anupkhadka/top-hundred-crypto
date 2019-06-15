@@ -1,1 +1,30 @@
+<h1>Top 100 Cryptocurrencies by Market Capitalization</h1>
 
+<% if @error %>
+<div class="error">@error</div>
+<% else %>
+  <table>
+    <tr class="th_row">
+      <th>#</th>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Market Cap</th>
+      <th>Volume(24h)</th>
+      <th>Circulating Supply</th>
+      <th>Change(24h)</th>
+    <tr>
+    <% count = 0 %>
+    <% @crypto_data.each do |crypto| %>
+      <% count += 1 %>
+      <tr class="td_row">
+        <td><%=count%></td>
+        <td><%=crypto["name"]%></td>
+        <td>$<%=number_with_delimiter(crypto["quote"]["USD"]["price"].round(2), :delimiter => ',')%></td>
+        <td>$<%=number_with_delimiter(crypto["quote"]["USD"]["market_cap"].round, :delimiter => ',')%></td>
+        <td>$<%=number_with_delimiter(crypto["quote"]["USD"]["volume_24h"].round, :delimiter => ',')%></td>
+        <td>$<%=number_with_delimiter(crypto["circulating_supply"].round, :delimiter => ',')%></td>
+        <td>$<%=crypto["quote"]["USD"]["percent_change_24h"]%></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
